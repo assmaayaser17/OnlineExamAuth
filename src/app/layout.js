@@ -1,5 +1,9 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import '@fortawesome/fontawesome-free/css/all.css'
+// import localFont from "next/font/local";
+// import '@fortawesome/fontawesome-free/css/all.css';
+import Navbar from "./Navbar/Navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+       
         {children}
       </body>
     </html>
