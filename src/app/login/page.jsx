@@ -11,8 +11,9 @@ import { useFormik } from 'formik'
 import axios from 'axios'
 import {signIn} from 'next-auth/react'
 import Link from 'next/link'
-
 import { useRouter } from 'next/navigation'
+
+
 
 
 
@@ -21,45 +22,45 @@ import { useRouter } from 'next/navigation'
 export default function page() {
 
     let [apierr,setApierr]=useState(null)
-
+ const router = useRouter()
    
 
-    const router= useRouter()
 
-    async function Login(formValue){
-        setApierr(null)
- 
-       axios.post('https://exam.elevateegy.com/api/v1/auth/signin',formValue)
-       .then((res) => {
-        let {data} =res;
-        console.log(data)
+    const handelSubmit = async (values) => {
 
-        if(data.message == 'success') {
-            router.push ('/home')
+    const login= await signIn('credentials', {
+            email:values.email,
+            password:values.password,
+            callbackUrl:'/',
+            redirect:false
+
+
+
+
+
+        })
+
+        if(login?.ok) {
+
+            router.push('/')
+
+
+
+            
         }
-    })
-    .catch((err) =>  {
 
-        setApierr(err.response.data.message)
+        console.log(login)
 
 
-    })
- 
-         console.log(data)
 
- 
-        //  if(response.data.message=='success'){
- 
-        //      router.push('/home')
- 
-        //  } else {
- 
-        //  }
- 
- 
- 
-     }
- 
+
+    }
+
+
+
+
+
+
  let myForm= useFormik({
  
      initialValues:{
@@ -71,7 +72,7 @@ export default function page() {
  
      },
  
-     onSubmit:Login
+     onSubmit:handelSubmit
  
  
  
